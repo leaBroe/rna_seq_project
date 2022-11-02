@@ -2,7 +2,7 @@
 
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=1000M
-#SBATCH --time=01:10:00
+#SBATCH --time=02:30:00
 #SBATCH --job-name=quality_checks
 #SBATCH --mail-user=lea.broennimann@students.unibe.ch
 #SBATCH --mail-type=begin,end
@@ -16,4 +16,4 @@ cd /data/courses/rnaseq_course/breastcancer_de/reads
 module load UHTS/Quality_control/fastqc/0.11.9
 
 ## Run FASTQC
-fastqc -o /data/courses/rnaseq_course/breastcancer_de/lea_broe/quality_checks/ -t 2 *.fq
+fastqc -o /data/courses/rnaseq_course/breastcancer_de/lea_broe/quality_checks/ -t 6 *.gz
