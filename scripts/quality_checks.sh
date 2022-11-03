@@ -15,5 +15,5 @@ cd /data/courses/rnaseq_course/breastcancer_de/reads
 ## Load modules required for script commands
 module load UHTS/Quality_control/fastqc/0.11.9
 
-## Run FASTQC
+## Run FASTQC, run 6 samples in parallel (-t 6)
 fastqc -o /data/courses/rnaseq_course/breastcancer_de/lea_broe/quality_checks/ -t 6 *.gz
