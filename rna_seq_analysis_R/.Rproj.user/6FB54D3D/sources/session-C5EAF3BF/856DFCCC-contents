@@ -1,0 +1,6 @@
+
+
+TNBC3 <- read.table("/Users/leabroennimann/Desktop/Master_Bioinformatik/1._Semester/RNA_Seq/feature_counts_2nd_output/TNBC3_featureCounts_output.txt", header = T)
+
+TNBC2 <- read.table("/Users/leabroennimann/Desktop/Master_Bioinformatik/1._Semester/RNA_Seq/feature_counts_2nd_output/TNBC2_featureCounts_output.txt", header = T)
+
