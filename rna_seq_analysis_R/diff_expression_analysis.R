@@ -22,6 +22,7 @@ dds <- DESeqDataSetFromMatrix(countData = countDataMatrix, colData = sample_info
 dds2 <- DESeq(dds)
 
 vsd <- vst(dds2, blind=TRUE)
+rlog <- rlog(dds2, blind=TRUE)
 
 library("pheatmap")
 
@@ -30,8 +31,28 @@ select <- order(rowMeans(counts(dds2,normalized=FALSE)), decreasing=TRUE)[1:20]
 
 df <- as.data.frame(colData(dds2)[,"type"])
 
-pheatmap(assay(vsd)[select,], cluster_rows=FALSE, show_rownames=FALSE, cluster_cols=FALSE)
+pheatmap(assay(vsd)[select,], cluster_rows=FALSE, show_rownames=FALSE, cluster_cols=FALSE, main="Heatmap of the count matrix")
+?pheatmap
 
 plotPCA(vsd, intgroup="type")
+plotPCA(rlog, intgroup="type")
+
+resultsNames(dds2)
+
+(results_HER2 <- results(dds2, contrast=c("type", "HER2", "Normal")))
+
+(results_TNBC <- results(dds2, contrast=c("type", "TNBC", "Normal")))
+
+(results_NonTNBC <- results(dds2, contrast=c("type", "NonTNBC", "Normal")))
+
+
+(p_values_HER2 <- results_HER2$pvalue)
+
+p_values_HER2[which(p_values_HER2 < 0.05)]
+
+
+
+
+
 
 
