@@ -28,6 +28,7 @@ countDataMatrix <- as.matrix(count_matrix[ , ])
 col.order <- c("HER21", "HER22", "HER23", "NonTNBC1", "NonTNBC2", "NonTNBC3", "TNBC1", "TNBC2", "TNBC3", "Normal1", "Normal2", "Normal3")
 countDataMatrix <- countDataMatrix[ , col.order]
 
+
 # Create DESeq2 object
 dds <- DESeqDataSetFromMatrix(countData = countDataMatrix, colData = sample_info, design = ~ type)
 dds2 <- DESeq(dds)
@@ -47,6 +48,8 @@ pheatmap(assay(vsd)[select,], cluster_rows=FALSE, show_rownames=FALSE, cluster_c
 # Create PCA plots with different transformations
 plotPCA(vsd, intgroup="type")
 plotPCA(rlog, intgroup="type")
+
+sample_info <- sample_info[match(colnames(countDataMatrix), as.character(sample_info$sample)), ]
 
 # Differential expression analysis
 resultsNames(dds2)
