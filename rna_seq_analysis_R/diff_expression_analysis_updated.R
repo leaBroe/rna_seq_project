@@ -87,14 +87,24 @@ plotPCA(rlog, intgroup="type")
 # Differential expression analysis
 resultsNames(dds2)
 
+# COMPARISON HER VS NORMAL
 (results_HER2 <- results(dds2, contrast=c("type", "HER2", "Normal")))
 (results_HER2_df <- as.data.frame(results_HER2))
 
+# COMPARISON TNBC VS NORMAL
 (results_TNBC <- results(dds2, contrast=c("type", "TNBC", "Normal")))
 results_TNBC_df <- as.data.frame(results_TNBC)
 
+# COMPARISON NonTNBC VS NORMAL
 (results_NonTNBC <- results(dds2, contrast=c("type", "NonTNBC", "Normal")))
 results_NonTNBC_df <- as.data.frame(results_NonTNBC)
+
+# COMPARISON TNBC VS NonTNBC
+(results_TNBC_Non_TNBC <- results(dds2, contrast=c("type", "TNBC", "NonTNBC")))
+results_TNBC_Non_TNBC_df <- as.data.frame(results_TNBC_Non_TNBC)
+
+
+sum(results_TNBC_Non_TNBC$padj < 0.05, na.rm=TRUE)
 
 (p_values_HER2 <- results_HER2$pvalue)
 
@@ -110,7 +120,7 @@ EnhancedVolcano(results_HER2_df,
                 lab = rownames(results_HER2_df),
                 x = 'log2FoldChange',
                 y = 'pvalue',
-                title = "title",
+                title = "HER2 vs WT",
                 subtitle = element_blank(),
                 colAlpha = 0.5,
                 legendPosition = 'bottom',
@@ -154,6 +164,41 @@ EnhancedVolcano(results_NonTNBC_df,
                 max.overlaps = 10,
                 pointSize = 1,
                 labSize = 4)
+
+
+EnhancedVolcano(results_TNBC_Non_TNBC_df,
+                lab = rownames(results_TNBC_Non_TNBC_df),
+                x = 'log2FoldChange',
+                y = 'pvalue',
+                title = "TNBC vs NonTNBC",
+                subtitle = element_blank(),
+                colAlpha = 0.5,
+                legendPosition = 'bottom',
+                legendLabSize = 12,
+                legendIconSize = 4.0,
+                drawConnectors = TRUE,
+                widthConnectors = 0.75,
+                pointSize = 1,
+                labSize = 4)
+
+
+# Based on the original publication, select 2-3 genes that are of particular interest and investigate their expression level. 
+# You could use, for example, the normalised counts (see DESeq2::counts) where the effect of between-sample differences in 
+# sequencing depth has been removed.
+
+
+counts <- "counts"(dds2, normalized = TRUE)
+
+# SPARC
+counts["ENSG00000113140", ]
+
+# RACK1
+counts["ENSG00000204628", ]
+
+# B2M
+counts["ENSG00000166710", ]
+
+
 
 
 
