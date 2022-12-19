@@ -103,8 +103,15 @@ results_NonTNBC_df <- as.data.frame(results_NonTNBC)
 (results_TNBC_Non_TNBC <- results(dds2, contrast=c("type", "TNBC", "NonTNBC")))
 results_TNBC_Non_TNBC_df <- as.data.frame(results_TNBC_Non_TNBC)
 
-
+# How many genes are differentially expressed (DE) in the pairwise comparison you selected (e.g. padj < 0.05)
 sum(results_TNBC_Non_TNBC$padj < 0.05, na.rm=TRUE)
+
+# How many of the DE genes are down-regulated?
+sum(results_TNBC_Non_TNBC$log2FoldChange < 0 & results_TNBC_Non_TNBC$padj < 0.05, na.rm=TRUE)
+
+# How many of the DE genes are up-regulated?
+sum(results_TNBC_Non_TNBC$log2FoldChange > 0 & results_TNBC_Non_TNBC$padj < 0.05, na.rm=TRUE)
+
 
 (p_values_HER2 <- results_HER2$pvalue)
 
@@ -187,7 +194,7 @@ EnhancedVolcano(results_TNBC_Non_TNBC_df,
 # sequencing depth has been removed.
 
 
-counts <- "counts"(dds2, normalized = TRUE)
+counts <- counts(dds2, normalized = TRUE)
 
 # SPARC
 counts["ENSG00000113140", ]
