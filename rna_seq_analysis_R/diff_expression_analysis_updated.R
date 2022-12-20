@@ -47,7 +47,7 @@ vsd <- vst(dds2, blind=TRUE)
 rlog <- rlog(dds2, blind=TRUE)
 
 # Create heatmap
-select <- order(rowMeans(counts(dds2,normalized=FALSE)), decreasing=TRUE)[1:50]
+select <- order(rowMeans(counts(dds2,normalized=FALSE)), decreasing=TRUE)[1:20]
 
 df <- as.data.frame(colData(dds2)[,"type"])
 
@@ -102,6 +102,11 @@ results_NonTNBC_df <- as.data.frame(results_NonTNBC)
 # COMPARISON TNBC VS NonTNBC
 (results_TNBC_Non_TNBC <- results(dds2, contrast=c("type", "TNBC", "NonTNBC")))
 results_TNBC_Non_TNBC_df <- as.data.frame(results_TNBC_Non_TNBC)
+
+# COMPARISON TNBC VS HER2
+(results_TNBC_HER2 <- results(dds2, contrast=c("type", "TNBC", "HER2")))
+results_TNBC_HER2_df <- as.data.frame(results_TNBC_HER2)
+
 
 # How many genes are differentially expressed (DE) in the pairwise comparison you selected (e.g. padj < 0.05)
 sum(results_TNBC_Non_TNBC$padj < 0.05, na.rm=TRUE)
