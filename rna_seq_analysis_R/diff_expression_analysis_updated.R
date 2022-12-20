@@ -28,6 +28,7 @@ sample_info <- data.frame(c("HER21", "Normal2", "NonTNBC3", "TNBC1", "NonTNBC2",
                           c("HER2", "Normal", "NonTNBC", "TNBC", "NonTNBC", "Normal", "TNBC", "HER2", "Normal", "HER2", "TNBC", "NonTNBC" ))
 colnames(sample_info) <- c("sample", "type")
 
+
 sample_info <- sample_info[match(colnames(countDataMatrix), as.character(sample_info$sample)), ]
 
 # Turn count matrix from dataframe to matrix
@@ -37,6 +38,7 @@ countDataMatrix <- as.matrix(count_matrix[ , ])
 col.order <- c("HER21", "HER22", "HER23", "NonTNBC1", "NonTNBC2", "NonTNBC3", "TNBC1", "TNBC2", "TNBC3", "Normal1", "Normal2", "Normal3")
 countDataMatrix <- countDataMatrix[ , col.order]
 
+class(sample_info)
 
 # Create DESeq2 object
 dds <- DESeqDataSetFromMatrix(countData = countDataMatrix, colData = sample_info, design = ~ type)
@@ -47,11 +49,11 @@ vsd <- vst(dds2, blind=TRUE)
 rlog <- rlog(dds2, blind=TRUE)
 
 # Create heatmap
-select <- order(rowMeans(counts(dds2,normalized=FALSE)), decreasing=TRUE)[1:20]
+select <- order(rowMeans(counts(dds2,normalized=TRUE)), decreasing=TRUE)[1:20]
 
-df <- as.data.frame(colData(dds2)[,"type"])
+df <- as.data.frame(colData(dds2)[,c("sample", "type")])
 
-pheatmap(assay(vsd)[select,], cluster_rows=FALSE, show_rownames=FALSE, cluster_cols=FALSE, main="Heatmap of the count matrix")
+pheatmap(assay(vsd)[select,], cluster_rows=FALSE, show_rownames=FALSE, cluster_cols=FALSE, annotation_col=df, main="Heatmap of the count matrix")
 ?pheatmap
 
 # Heatmap of the sample-to-sample distances
@@ -106,6 +108,10 @@ results_TNBC_Non_TNBC_df <- as.data.frame(results_TNBC_Non_TNBC)
 # COMPARISON TNBC VS HER2
 (results_TNBC_HER2 <- results(dds2, contrast=c("type", "TNBC", "HER2")))
 results_TNBC_HER2_df <- as.data.frame(results_TNBC_HER2)
+
+# COMPARISON NonTNBC VS HER2
+(results_NonTNBC_HER2 <- results(dds2, contrast=c("type", "NonTNBC", "HER2")))
+results_NonTNBC_HER2_df <- as.data.frame(results_NonTNBC_HER2)
 
 
 # How many genes are differentially expressed (DE) in the pairwise comparison you selected (e.g. padj < 0.05)
