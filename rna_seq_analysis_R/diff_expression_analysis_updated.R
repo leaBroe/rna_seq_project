@@ -13,9 +13,6 @@ library("pheatmap")
 library("ggplot2")
 library("RColorBrewer")
 
-if (!require("BiocManager", quietly = TRUE))
-  install.packages("BiocManager")
-
 BiocManager::install("EnhancedVolcano", force=TRUE)
 library("EnhancedVolcano")
 
@@ -54,7 +51,6 @@ select <- order(rowMeans(counts(dds2,normalized=TRUE)), decreasing=TRUE)[1:20]
 df <- as.data.frame(colData(dds2)[,c("sample", "type")])
 
 pheatmap(assay(vsd)[select,], cluster_rows=FALSE, show_rownames=FALSE, cluster_cols=FALSE, annotation_col=df, main="Heatmap of the count matrix")
-?pheatmap
 
 # Heatmap of the sample-to-sample distances
 
@@ -118,10 +114,10 @@ results_NonTNBC_HER2_df <- as.data.frame(results_NonTNBC_HER2)
 sum(results_TNBC_Non_TNBC$padj < 0.05, na.rm=TRUE)
 
 # How many of the DE genes are down-regulated?
-sum(results_TNBC_Non_TNBC$log2FoldChange < 0 & results_TNBC_Non_TNBC$padj < 0.05, na.rm=TRUE)
+sum(results_TNBC_Non_TNBC$log2FoldChange < -1 & results_TNBC_Non_TNBC$padj < 0.05, na.rm=TRUE)
 
 # How many of the DE genes are up-regulated?
-sum(results_TNBC_Non_TNBC$log2FoldChange > 0 & results_TNBC_Non_TNBC$padj < 0.05, na.rm=TRUE)
+sum(results_TNBC_Non_TNBC$log2FoldChange > 1 & results_TNBC_Non_TNBC$padj < 0.05, na.rm=TRUE)
 
 
 (p_values_HER2 <- results_HER2$pvalue)
@@ -146,7 +142,6 @@ EnhancedVolcano(results_HER2_df,
                 legendIconSize = 4.0,
                 drawConnectors = TRUE,
                 widthConnectors = 0.75,
-                max.overlaps = 10,
                 pointSize = 1,
                 labSize = 4)
 
@@ -163,7 +158,6 @@ EnhancedVolcano(results_TNBC_df,
                 legendIconSize = 4.0,
                 drawConnectors = TRUE,
                 widthConnectors = 0.75,
-                max.overlaps = 10,
                 pointSize = 1,
                 labSize = 4)
 
@@ -189,6 +183,21 @@ EnhancedVolcano(results_TNBC_Non_TNBC_df,
                 x = 'log2FoldChange',
                 y = 'pvalue',
                 title = "TNBC vs NonTNBC",
+                subtitle = element_blank(),
+                colAlpha = 0.5,
+                legendPosition = 'bottom',
+                legendLabSize = 12,
+                legendIconSize = 4.0,
+                drawConnectors = TRUE,
+                widthConnectors = 0.75,
+                pointSize = 1,
+                labSize = 4)
+
+EnhancedVolcano(results_NonTNBC_HER2_df,
+                lab = rownames(results_NonTNBC_HER2_df),
+                x = 'log2FoldChange',
+                y = 'pvalue',
+                title = "NonTNBC vs HER2",
                 subtitle = element_blank(),
                 colAlpha = 0.5,
                 legendPosition = 'bottom',

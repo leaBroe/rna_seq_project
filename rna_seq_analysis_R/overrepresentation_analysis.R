@@ -16,16 +16,16 @@ results_NonTNBC_HER2_df_omit_NAs <- na.omit(results_NonTNBC_HER2_df)
 
 
 # Select all Gene IDS for TNBC vs NonTNBC DE genes
-gene_IDs_TNBC_NonTNBC <- row.names(results_TNBC_Non_TNBC_df_omit_NA[results_TNBC_Non_TNBC_df_omit_NA$padj<0.05,])
+gene_IDs_TNBC_NonTNBC <- row.names(results_TNBC_Non_TNBC_df_omit_NA[results_TNBC_Non_TNBC_df_omit_NA$padj<0.05 & results_TNBC_Non_TNBC_df_omit_NA$log2FoldChange > 1,])
 
 # Select all Gene IDS for TNBC vs normal DE genes
-gene_IDs_TNBC <- row.names(results_TNBC_df_omit_NAs[results_TNBC_df_omit_NAs$padj<0.05,])
+gene_IDs_TNBC <- row.names(results_TNBC_df_omit_NAs[results_TNBC_df_omit_NAs$padj<0.05 & results_TNBC_df_omit_NAs$log2FoldChange > 1,])
 
 # Select all Gene IDs for TNBC vs HER2 DE genes
-gene_IDs_TNBC_HER2 <- row.names(results_TNBC_HER2_df_omit_NAs[results_TNBC_HER2_df_omit_NAs$padj<0.05,])
+gene_IDs_TNBC_HER2 <- row.names(results_TNBC_HER2_df_omit_NAs[results_TNBC_HER2_df_omit_NAs$padj<0.05 & results_TNBC_HER2_df_omit_NAs$log2FoldChange > 1,])
 
 # Select all Gene IDs for NonTNBC vs HER2 DE genes
-gene_IDs_NonTNBC_HER2 <- row.names(results_NonTNBC_HER2_df_omit_NAs[results_NonTNBC_HER2_df_omit_NAs$padj<0.05,])
+gene_IDs_NonTNBC_HER2 <- row.names(results_NonTNBC_HER2_df_omit_NAs[results_NonTNBC_HER2_df_omit_NAs$padj<0.05 & results_NonTNBC_HER2_df_omit_NAs$log2FoldChange > 1,])
 
 # Check with sum(results_TNBC_Non_TNBC$padj < 0.05, na.rm=TRUE) = 1683
 length(gene_IDs_TNBC_NonTNBC)
@@ -79,13 +79,12 @@ library(ggplot2)
 
 barplot(enrichGO_TNBC_NonTNBC, showCategory = 11) + ggtitle("TNBC vs. NonTNBC Bar plot of enriched terms")
 barplot(enrichGO_TNBC_Normal, showCategory = 11) + ggtitle("TNBC vs. Normal Bar plot of enriched terms")
-barplot(enrichGO_TNBC_HER2, showCategory = 20) + ggtitle("TNBC vs. HER2 Bar plot of enriched terms")
+barplot(enrichGO_TNBC_HER2, showCategory = 11) + ggtitle("TNBC vs. HER2 Bar plot of enriched terms")
 barplot(enrichGO_NonTNBC_HER2, showCategory = 15) + ggtitle("NonTNBC vs. HER2 Bar plot of enriched terms")
 
 dotplot(enrichGO_TNBC_NonTNBC) + ggtitle("TNBC vs. NonTNBC Enriched GO")
 dotplot(enrichGO_TNBC_Normal) + ggtitle("TNBC vs. Normal Enriched GO")
 dotplot(enrichGO_TNBC_HER2, showCategory = 20) + ggtitle("TNBC vs. HER2 Enriched GO")
-dotplot(enrichGO_TNBC_HER2_BP)
-dotplot(enrichGO_NonTNBC_HER2)
+dotplot(enrichGO_NonTNBC_HER2) + ggtitle("NonTNBC vs. HER2 Enriched GO")
 
 
