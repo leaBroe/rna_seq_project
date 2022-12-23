@@ -72,7 +72,7 @@ ggplot(pcaData, aes(PC1, PC2, color=type)) +
   xlab(paste0("PC1: ",percentVar[1],"% variance")) +
   ylab(paste0("PC2: ",percentVar[2],"% variance")) + 
   coord_fixed()+
-  labs(title="PCA plot of vst transformed data", colour="Group") +
+  labs(title="PCA plot of VST transformed data", colour="Group") +
   theme_light()
 
 
@@ -129,6 +129,13 @@ sum(results_HER2$padj < 0.05, na.rm=TRUE)
 sum(results_TNBC$padj < 0.05, na.rm=TRUE)
 
 sum(results_NonTNBC$padj < 0.05, na.rm=TRUE)
+
+sum(results_TNBC_Non_TNBC$padj < 0.05, na.rm = TRUE)
+
+# Check number of duplicates in results data frame
+sum(duplicated(results_TNBC_Non_TNBC_df))
+sum(duplicated(results_HER2_df))
+sum(duplicated(results_NonTNBC_df))
 
 EnhancedVolcano(results_HER2_df,
                 lab = rownames(results_HER2_df),
@@ -217,14 +224,44 @@ EnhancedVolcano(results_NonTNBC_HER2_df,
 counts <- counts(dds2, normalized = TRUE)
 
 # SPARC
-counts["ENSG00000113140", ]
+(SPARC <- counts["ENSG00000113140", ])
+mean(SPARC[1:3])
+mean(SPARC[4:6])
+mean(SPARC[7:9])
+mean(SPARC[10:12])
 
-# RACK1
-counts["ENSG00000204628", ]
 
-# B2M
+# estrogen related receptor alpha
+counts["ENSG00000173153", ]
+
+# Progesterone receptor
+counts["ENSG00000082175", ]
+
+results_TNBC_Non_TNBC["ENSG00000082175", ]
+
+# estrogen receptor 1
+counts["ENSG00000091831", ]
+
+results_TNBC_Non_TNBC["ENSG00000091831", ]
+
+# RACK1, differentially expressed (downregulated in all 3 subtypes compared to WT)
+RACK1 <- counts["ENSG00000204628", ]
+mean(RACK1[1:3])
+mean(RACK1[4:6])
+mean(RACK1[7:9])
+mean(RACK1[10:12])
+
+results_HER2["ENSG00000204628", ]
+results_NonTNBC["ENSG00000204628", ]
+results_TNBC["ENSG00000204628", ]
+
+
+# B2M, not differentially expressed in any of the 3 subtypes compared to WT
 counts["ENSG00000166710", ]
 
+results_HER2["ENSG00000166710", ]
+results_NonTNBC["ENSG00000166710", ]
+results_TNBC["ENSG00000166710", ]
 
 
 
