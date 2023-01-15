@@ -18,6 +18,6 @@ The script for step 1-3 of the analysis can be found in the scripts folder, the 
 3. ***Counting the number of genes using FeatureCounts***: rna_seq_project/scripts/feature_counts.sh
 Since feature counts was run on each sample separately, the count matrix had to be created using the bioinfokit python module (rna_seq_project/scripts/generate_count_matrix.py). 
 
-4. ***Exploratory data and differential expression analysis using DESeq2***: rna_seq_project/rna_seq_analysis_R/diff_expression_analysis_updated.R
+4. ***Exploratory data and differential expression analysis using DESeq2***: rna_seq_project/rna_seq_analysis_R/diff_expression_analysis_final.R
 
-5. ***Overrepresentation analysis using ClusterProfiler***: rna_seq_project/rna_seq_analysis_R/overrepresentation_analysis.R
+5. ***Overrepresentation analysis using ClusterProfiler***: rna_seq_project/rna_seq_analysis_R/overrepresentation_analysis_final.R
