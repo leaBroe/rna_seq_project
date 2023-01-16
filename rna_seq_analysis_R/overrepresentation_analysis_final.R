@@ -19,7 +19,11 @@ results_HER2_df_omit_NAs <- na.omit(results_HER2_df)
 results_NonTNBC_df_omit_NAs <- na.omit(results_NonTNBC_df)
 
 # Select all Gene IDS for TNBC vs NonTNBC DE genes
-gene_IDs_TNBC_NonTNBC <- row.names(results_TNBC_Non_TNBC_df_omit_NA[results_TNBC_Non_TNBC_df_omit_NA$padj<0.05,])
+(gene_IDs_TNBC_NonTNBC <- row.names(results_TNBC_Non_TNBC_df[results_TNBC_Non_TNBC_df$padj<0.05,]))
+
+gene_IDs_TNBC_NonTNBC_df <- as.data.frame(gene_IDs_TNBC_NonTNBC)
+write.csv(gene_IDs_TNBC_NonTNBC_df, "/Users/leabroennimann/Desktop/Master_Bioinformatik/1._Semester/RNA_Seq/gene_IDs_TNBC_NonTNBC.csv", row.names=FALSE)
+
 
 # Select all Gene IDS for TNBC vs normal DE genes
 gene_IDs_TNBC <- row.names(results_TNBC_df_omit_NAs[results_TNBC_df_omit_NAs$padj<0.05 &  abs(results_TNBC_df_omit_NAs$log2FoldChange) > 1,])
@@ -73,8 +77,8 @@ enrichGO_TNBC_NonTNBC <-
     OrgDb = 'org.Hs.eg.db',
     ont = "ALL",
     keyType = "ENSEMBL",
-    pvalueCutoff = 0.05,
-    qvalueCutoff = 0.05,
+    pvalueCutoff = 0.1,
+    qvalueCutoff = 0.1,
     readable = T
   )
 
@@ -154,7 +158,7 @@ enrichGO_NonTNBC_Normal <-
 library(DOSE)
 library(ggplot2)
 
-barplot(enrichGO_TNBC_NonTNBC, split="ONTOLOGY") + facet_grid(ONTOLOGY~., scale="free") + ggtitle("TNBC vs. NonTNBC Bar plot of enriched terms")
+barplot(enrichGO_TNBC_NonTNBC, split="ONTOLOGY", showCategory=20) + facet_grid(ONTOLOGY~., scale="free") + ggtitle("TNBC vs. NonTNBC Bar plot of enriched terms")
 barplot(enrichGO_TNBC_Normal, split="ONTOLOGY") + facet_grid(ONTOLOGY~., scale="free")+ ggtitle("TNBC vs. Normal Bar plot of enriched terms")
 barplot(enrichGO_TNBC_HER2, split="ONTOLOGY") + facet_grid(ONTOLOGY~., scale="free") + ggtitle("TNBC vs. HER2 Bar plot of enriched terms")
 barplot(enrichGO_NonTNBC_HER2, split="ONTOLOGY") + facet_grid(ONTOLOGY~., scale="free") + ggtitle("NonTNBC vs. HER2 Bar plot of enriched terms")
@@ -163,7 +167,7 @@ barplot(enrichGO_NonTNBC_Normal, split="ONTOLOGY") + facet_grid(ONTOLOGY~., scal
 
 
 
-dotplot(enrichGO_TNBC_NonTNBC, split="ONTOLOGY") + facet_grid(ONTOLOGY~., scale="free") + ggtitle("Enriched Gene ontology (GO) Terms TNBC vs. NonTNBC")
+dotplot(enrichGO_TNBC_NonTNBC, split="ONTOLOGY", showCategory=10) + facet_grid(ONTOLOGY~., scale="free",) + ggtitle("Enriched Gene ontology (GO) Terms TNBC vs. NonTNBC")
 dotplot(enrichGO_TNBC_Normal, split="ONTOLOGY") + facet_grid(ONTOLOGY~., scale="free") + ggtitle("Enriched Gene ontology (GO) Terms TNBC vs. Normal")
 dotplot(enrichGO_TNBC_HER2, split="ONTOLOGY") + facet_grid(ONTOLOGY~., scale="free") + ggtitle("TNBC vs. HER2 Enriched GO Terms")
 dotplot(enrichGO_NonTNBC_HER2, split="ONTOLOGY") + facet_grid(ONTOLOGY~., scale="free") + ggtitle("NonTNBC vs. HER2 Enriched GO Terms")
