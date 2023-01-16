@@ -236,6 +236,8 @@ mean(SPARC[10:12])
 results_HER2["ENSG00000113140", ]
 results_NonTNBC["ENSG00000113140", ]
 results_TNBC["ENSG00000113140", ]
+results_TNBC_Non_TNBC["ENSG00000113140", ]
+
 
 
 # Progesterone receptor
@@ -262,6 +264,7 @@ mean(RACK1[10:12])
 results_HER2["ENSG00000204628", ]
 results_NonTNBC["ENSG00000204628", ]
 results_TNBC["ENSG00000204628", ]
+results_TNBC_Non_TNBC["ENSG00000204628", ]
 
 
 # B2M, not differentially expressed in any of the 3 subtypes compared to WT
@@ -278,11 +281,34 @@ results_NonTNBC["ENSG00000106541", ]
 results_TNBC["ENSG00000106541", ]
 results_TNBC_Non_TNBC["ENSG00000106541", ]
 
+# PSPHP1 phosphoserine phosphatase pseudogene 1
+
+results_TNBC_Non_TNBC["ENSG00000226278", ]
+results_HER2["ENSG00000226278", ]
+results_TNBC["ENSG00000226278", ]
+results_NonTNBC["ENSG00000226278", ]
 
 
+# ERBB2 / HER2
+results_NonTNBC["ENSG00000141736", ]
+results_TNBC_Non_TNBC["ENSG00000141736", ]
+results_TNBC["ENSG00000141736", ]
+results_HER2["ENSG00000141736", ]
 
 
+# TFF1
+results_TNBC["ENSG00000160182", ]
+results_NonTNBC["ENSG00000160182", ]
 
+# FOXA1
+results_HER2["ENSG00000129514", ]
+results_TNBC["ENSG00000129514", ]
+results_NonTNBC["ENSG00000129514", ]
+
+# ELF5
+results_NonTNBC["ENSG00000135374", ]
+results_TNBC["ENSG00000135374", ]
+results_HER2["ENSG00000135374", ]
 
 
 
