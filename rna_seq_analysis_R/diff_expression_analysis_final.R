@@ -26,7 +26,7 @@ sample_info <- data.frame(c("HER21", "Normal2", "NonTNBC3", "TNBC1", "NonTNBC2",
 colnames(sample_info) <- c("sample", "type")
 
 
-sample_info <- sample_info[match(colnames(countDataMatrix), as.character(sample_info$sample)), ]
+(sample_info <- sample_info[match(colnames(countDataMatrix), as.character(sample_info$sample)), ])
 
 # Turn count matrix from dataframe to matrix
 countDataMatrix <- as.matrix(count_matrix[ , ])
@@ -50,7 +50,7 @@ select <- order(rowMeans(counts(dds2,normalized=TRUE)), decreasing=TRUE)[1:50]
 
 df <- as.data.frame(colData(dds2)[,c("sample", "type")])
 
-pheatmap(assay(vsd)[select,], scale = "column", border_color = NA, cluster_rows=FALSE, show_rownames=FALSE, cluster_cols=FALSE, annotation_col=df, main="Comparison of gene expression levels of the 4 experimental groups")
+pheatmap(assay(vsd)[select,], scale = "column", border_color = NA, cluster_rows=FALSE, show_rownames=FALSE, cluster_cols=FALSE, annotation_col=df, main="Comparison of Gene Expression Levels of the 4 Experimental Groups")
 
 pheatmap(assay(rlog)[select,], border_color = NA, cluster_rows=FALSE, show_rownames=FALSE, cluster_cols=FALSE, annotation_col=df, main="Comparison of gene expression levels of the 4 experimental groups")
 
@@ -74,7 +74,7 @@ ggplot(pcaData, aes(PC1, PC2, color=type)) +
   xlab(paste0("PC1: ",percentVar[1],"% variance")) +
   ylab(paste0("PC2: ",percentVar[2],"% variance")) + 
   coord_fixed()+
-  labs(title="Principal Component Analysis (PCA)", colour="Group") +
+  labs(title="Principal Component Analysis", colour="Group") +
   theme_light()
 
 
