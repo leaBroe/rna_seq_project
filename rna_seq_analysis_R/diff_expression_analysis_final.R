@@ -45,7 +45,7 @@ dds2 <- DESeq(dds)
 vsd <- vst(dds2, blind=TRUE)
 rlog <- rlog(dds2, blind=TRUE)
 
-# Create heatmap
+# Create heatmap of the count matrix
 select <- order(rowMeans(counts(dds2,normalized=TRUE)), decreasing=TRUE)[1:50]
 
 df <- as.data.frame(colData(dds2)[,c("sample", "type")])
@@ -53,7 +53,6 @@ df <- as.data.frame(colData(dds2)[,c("sample", "type")])
 pheatmap(assay(vsd)[select,], scale = "column", border_color = NA, cluster_rows=FALSE, show_rownames=FALSE, cluster_cols=FALSE, annotation_col=df, main="Comparison of gene expression levels of the 4 experimental groups")
 
 pheatmap(assay(rlog)[select,], border_color = NA, cluster_rows=FALSE, show_rownames=FALSE, cluster_cols=FALSE, annotation_col=df, main="Comparison of gene expression levels of the 4 experimental groups")
-
 
 # Heatmap of the sample-to-sample distances
 
@@ -313,6 +312,29 @@ results_HER2["ENSG00000135374", ]
 # IGHV3-66
 results_NonTNBC["ENSG00000211972", ]
 results_TNBC["ENSG00000211972", ]
+
+# FSIP1
+results_NonTNBC["ENSG00000150667", ]
+results_TNBC["ENSG00000150667", ]
+
+# ACADSB
+results_NonTNBC["ENSG00000196177", ]
+results_TNBC["ENSG00000196177", ]
+
+# CALML5
+
+results_NonTNBC["ENSG00000178372", ]
+results_TNBC["ENSG00000178372", ]
+
+# PROM1
+results_NonTNBC["ENSG00000007062", ]
+results_TNBC["ENSG00000007062", ]
+
+# BRCA1
+results_NonTNBC["ENSG00000012048", ]
+results_TNBC["ENSG00000012048", ]
+results_TNBC_Non_TNBC["ENSG00000012048", ]
+
 
 
 
